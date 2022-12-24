@@ -1,0 +1,111 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+html {
+    color-scheme: dark light;
+}
+
+body {
+    min-height: 100vh;
+    font-family: monospace, sans-serif;
+}
+
+img, picture, svg, video {
+    display: block;
+    max-width: 100%;
+}
+
+div {
+    border: 2px solid black;
+}
+
+main {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.calc-container {
+    border-radius: 2%;
+    background-color: black;
+    border: 5px solid rgba(81, 8, 184, 0.651);
+    box-shadow:
+        inset 0 0 50px #fff,      /* inner white */
+        inset 20px 0 80px #f0f,   /* inner left magenta short */
+        inset -20px 0 80px #0ff,  /* inner right cyan short */
+        inset 20px 0 300px #f0f,  /* inner left magenta broad */
+        inset -20px 0 300px #0ff, /* inner right cyan broad */
+        0 0 50px #fff,            /* outer white */
+        -10px 0 80px #f0f,        /* outer left magenta */
+        10px 0 80px #0ff;   
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    background-color: white;
+    border: 1.5px solid gray;
+    color: black;
+}
+
+.input-display {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.result-display {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.input-text {
+    font-size: 80px;
+    text-align: right;
+    padding-right: 10px;
+    
+}
+
+.result {
+    font-size: 80px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.btns-container {
+    background-color: black;
+    border: 3px solid rgba(47,47,47,1);
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(100px, auto) repeat(5, 80px);
+    gap: 2px;
+    padding: 2px;
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+button {
+    margin: 1px;
+    border-radius: 5%;
+    border: none;
+    font-weight: initial;
+    font-size: 3em;
+    font-family: monospace;
+    color: black;
+}
