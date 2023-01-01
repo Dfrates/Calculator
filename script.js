@@ -16,9 +16,7 @@ const clearBtn = buttonContainer.querySelector('.clear');
 const deleteBtn = buttonContainer.querySelector('.delete');
 const equalBtn = buttonContainer.querySelector('.equal');
 const decimalBtn = buttonContainer.querySelector('.dec');
-
 const operatorBtns = buttonContainer.querySelectorAll('.operator');
-
 const numberBtns = buttonContainer.querySelectorAll('.number');
 
 let result = 0;
@@ -27,8 +25,8 @@ let operatorFlag = 1;
 let inputOne = 0;
 let inputTwo = 0;
 let operatorInUse = false;
-let inputScreenCount = 0;
-let resultScreenCount = 0;
+let screenCount = 0;
+let decimalInUse = false;
 
 
 function add(a, b) {
@@ -44,6 +42,10 @@ function mutiply(a, b) {
 }
 
 function divide(a, b) {
+    if (parseInt(b) != 0) {
+        resultText.textContent = 'NO!';
+        return;
+    }
     return a / b;
 }
 
@@ -55,8 +57,7 @@ function clear() {
     inputText.textContent = '';
     resultText.textContent = '';
     result = 0;
-    inputScreenCount = 0;
-    resultScreenCount = 0;
+    screenCount = 0;
     operatorInUse = false;
     numberFlag = false;
     inputOne = 0;
@@ -73,10 +74,9 @@ function deletInput() {
 }
 
 function inputToScreen(input) {
-    if (inputScreenCount < 8) {
+    if (screenCount < 8) {
         inputText.append(input);
-        inputScreenCount++;
-        return;
+        screenCount++;
     }
     
 }
@@ -84,15 +84,16 @@ function inputToScreen(input) {
 function setInputs() {
     const inputs = inputText.textContent.split(operator);
     if (!numberFlag) {
-    inputOne = parseInt(inputs[0]);
+    inputOne = parseFloat(inputs[0]);
     console.log('input1: ' + inputOne);
-    inputTwo = parseInt(inputs.at(-1));
+    inputTwo = parseFloat(inputs.at(-1));
     console.log('input2: ' + inputTwo);
     numberFlag = true;
     return;
     }
 
-    inputTwo = parseInt(inputs.at(-1));
+    inputTwo = parseFloat(inputs.at(-1));
+    decimalInUse = false;
     console.log('input2: ' + inputTwo);
 
 }
@@ -105,12 +106,9 @@ function setOperator(input) {
         operatorInUse = true;
         return;
     }
-
-    
 }
 
 function evaluate() {
-
     setOperator();
     setInputs();
     console.log(inputOne);
@@ -120,7 +118,7 @@ function evaluate() {
         clear();
         return;
     }
-    result = solve(operator, inputOne, inputTwo);
+    result = Math.round(solve(operator, inputOne, inputTwo) * 100) / 100;
 
     refresh();
 }
@@ -142,6 +140,7 @@ function solve(operator, operand1, operand2) {
             return;
     }
     operatorInUse = false;
+    decimalInUse = false;
 }
 
 
@@ -150,6 +149,7 @@ function solve(operator, operand1, operand2) {
 
 function refresh() {
     inputOne = result;
+    decimalInUse = false;
     numberFlag = false;
     operatorInUse = false;
     inputText.textContent = '';
@@ -169,27 +169,32 @@ function handleEvents() {
         deletInput();
     });
 
+    decimalBtn.addEventListener('click', function() {
+        if(!decimalInUse) {
+            inputToScreen(decimalBtn.textContent);
+            decimalInUse = true;
+        }
+        
+    });
+
     console.log(numberBtns.length);
     for(let i = 0; i < numberBtns.length; i++) {
         console.log('event added');
         numberBtns[i].addEventListener('click', function() {
             inputToScreen(numberBtns[i].textContent);
-        }, false);
+        });
     }
 
     for (let i = 0; i < operatorBtns.length; i++) {
         operatorBtns[i].addEventListener('click', function() {
             setOperator(operatorBtns[i].textContent);
+            decimalInUse = false;
         });
     }
 
     equalBtn.addEventListener('click', function() {
         evaluate();
     });
-
-
-
 }
-
 
 handleEvents();
