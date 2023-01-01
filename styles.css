@@ -111,3 +111,15 @@ button {
     color: black;
 }
 
+.number {
+    background-color: #D8BFD8;
+}
+
+.operator, .dec {
+    background-color: #DDA0DD;
+}
+
+.clear, .delete, .equal {
+    background-color: #E6E6FA;
+}
+
